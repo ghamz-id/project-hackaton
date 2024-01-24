@@ -1,5 +1,5 @@
-let rollingSound = new Audio('rpg-dice-rolling-95182.mp3')
-let winSound = new Audio('winharpsichord-39642.mp3')
+let rollingSound = new Audio('asset/rpg-dice-rolling-95182.mp3')
+let winSound = new Audio('asset/winharpsichord-39642.mp3')
 
 let ketentuan = [
     tangga = {
@@ -10,60 +10,56 @@ let ketentuan = [
     }
 ]
 
-let P1 = 0
-let P2 = 0
+let p1_position = 0;
+let p2_position = 0;
 
-function play(player, position, correction, angka) {
-    let tangga = ketentuan[0]
-    let ular = ketentuan[1]
+function play(player, correction, angka) {
+    let tangga = ketentuan[0];
+    let ular = ketentuan[1];
+    let box = 0;
     
-    let sum = 0
-    if (position === 'P1') { //posisi player 1
-        P1 += angka
-        if (P1 > 100) { // jika posisi + dadu > 100, posisi tetap
-            P1 -=angka
-        }
+    if (player === 'P1') { //posisi player 1
+        p1_position += angka;
         for (let i in tangga){ // ketentuan 1 (naik)
-            let naik = tangga[i]
-            if (P1 === +i){
-                P1 = naik;
+            let naik = tangga[i];
+            if (p1_position === +i){
+                p1_position = naik;
             }
         }
         for (let i in ular){ // ketentuan 2 (turun)
-            let turun = ular[i]
-            if (P1 === +i){
-                P1 = turun;
+            let turun = ular[i];
+            if (p1_position === +i){
+                p1_position = turun;
             }
         }
-        sum = P1
+        if (p1_position > 100) { // jika posisi + dadu > 100, posisi tetap
+            p1_position -=angka;
+        }
+        box = p1_position;
     }
 
-    if (position === 'P2') { //posisi player 2
-        P2 += angka
+    if (player === 'P2') { //posisi player 2
+        p2_position += angka;
         for (let i in tangga){ // ketentuan 1 (naik)
-            let naik = tangga[i]
-            if (P2 === +i){
-                P2 = naik;
+            let naik = tangga[i];
+            if (p2_position === +i){
+                p2_position = naik;
             }
         }
         for (let i in ular){ // ketentuan 2 (turun)
-            let turun = ular[i]
-            if (P2 === +i){
-                P2 = turun;
+            let turun = ular[i];
+            if (p2_position === +i){
+                p2_position = turun;
             }
         }
-        if (P2 > 100) { // jika posisi + dadu > 100, posisi tetap
-            P2 -=angka
+        if (p2_position > 100) { // jika posisi + dadu > 100, posisi tetap
+            p2_position -=angka;
         }
-        sum = P2
+        box = p2_position;
     }
 
-    document.getElementById(`${player}`).style.transition = `linear all .5s`
-
-    if (sum < 10) {
-        document.getElementById(`${player}`).style.left = `${(sum - 1) * 62}px`
-        document.getElementById(`${player}`).style.top = `${-0 * 62 - correction}px`
-    } else if (sum === 100) {
+    // Posisi Player
+    if (box === 100) {
         winSound.play()
         if (player === 'P1') {
             alert("Red Won !!")
@@ -71,45 +67,47 @@ function play(player, position, correction, angka) {
             alert("Yellow Won !!")
         }
         location.reload()
+    } else if (box < 10) {
+        document.getElementById(`${player}`).style.left = `${(box - 1) * 63}px`
+        document.getElementById(`${player}`).style.top = `${-0 * 63 - correction}px`
     } else {
-        numarr = Array.from(String(sum))
-        n1 = eval(numarr.shift())
-        n2 = eval(numarr.pop())
-        // console.log(n1, n2)
+        let numarr = Array.from(String(box)); // angka convert ke string dan diubah ke array per-string => 10 = ['1','0']
+        let row = numarr.shift(); //['0'] => baris
+        let col = numarr.pop(); //['1'] => kolom
 
-        if (n1 % 2 != 0) {
-            if (n2 == 0) {
-                document.getElementById(`${player}`).style.left = `${(9) * 62}px`
-                document.getElementById(`${player}`).style.top = `${(-n1 + 1) * 62 - correction}px`
+        if (+row % 2 === 1) {
+            if (+col === 0) {
+                document.getElementById(`${player}`).style.left = `${(9) * 63}px`
+                document.getElementById(`${player}`).style.top = `${(-row + 1) * 63 - correction}px`
             } else {
-                document.getElementById(`${player}`).style.left = `${(9 - (n2 - 1)) * 62}px`
-                document.getElementById(`${player}`).style.top = `${-n1 * 62 - correction}px`
+                document.getElementById(`${player}`).style.left = `${(9 - (col - 1)) * 63}px`
+                document.getElementById(`${player}`).style.top = `${-row * 63 - correction}px`
             }
-        } else if (n1 % 2 == 0) {
-            if (n2 == 0) {
-                document.getElementById(`${player}`).style.left = `${(0) * 62}px`
-                document.getElementById(`${player}`).style.top = `${(-n1 + 1) * 62 - correction}px`
+        } else if (+row % 2 === 0) {
+            if (+col === 0) {
+                document.getElementById(`${player}`).style.left = `${(0) * 63}px`
+                document.getElementById(`${player}`).style.top = `${(-row + 1) * 63 - correction}px`
             } else {
-                document.getElementById(`${player}`).style.left = `${(n2 - 1) * 62}px`
-                document.getElementById(`${player}`).style.top = `${-n1 * 62 - correction}px`
+                document.getElementById(`${player}`).style.left = `${(col - 1) * 63}px`;
+                document.getElementById(`${player}`).style.top = `${-row * 63 - correction}px`
             }
         }
     }
 }
 
 // Fungsi Dadu
-let turn = 1 //Pemain Pertama
+let turn = 1 // turn pertama
 function dadu(){
     rollingSound.play();
     let angka = Math.floor(Math.random() * 6) + 1;
     document.getElementById("angka").innerText = angka;
 
-    if (turn % 2 !== 0) {
-        document.getElementById('turn-player').innerText = `P1 : Yellow's`
-        play('P1', 'P1', 0, angka)
+    if (turn % 2 === 1) {
+        document.getElementById('turn-player').innerText = `P2 : Yellow's`
+        play('P1', -10, angka)
     }else if (turn % 2 === 0) {
-        document.getElementById('turn-player').innerText = `P2 : Red's`
-        play('P2', 'P2', 55, angka)
+        document.getElementById('turn-player').innerText = `P1 : Red's`
+        play('P2', 35, angka)
     }
-    turn = turn + 1
+    turn++
 }
