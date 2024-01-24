@@ -18,22 +18,18 @@ function play(player, position, correction, angka) {
     let ular = ketentuan[1]
     
     let sum = 0
-    //posisi player
-    if (position === 'P1') {
+    if (position === 'P1') { //posisi player 1
         P1 += angka
-        if (P1 > 100) {
+        if (P1 > 100) { // jika posisi + dadu > 100, posisi tetap
             P1 -=angka
         }
-
-        // ketentuan 1 (naik)
-        for (let i in tangga){
+        for (let i in tangga){ // ketentuan 1 (naik)
             let naik = tangga[i]
             if (P1 === +i){
                 P1 = naik;
             }
         }
-        // ketentuan 2 (turun)
-        for (let i in ular){
+        for (let i in ular){ // ketentuan 2 (turun)
             let turun = ular[i]
             if (P1 === +i){
                 P1 = turun;
@@ -42,25 +38,22 @@ function play(player, position, correction, angka) {
         sum = P1
     }
 
-    if (position == 'P2') {
-
+    if (position === 'P2') { //posisi player 2
         P2 += angka
-
-        if (P2 > 100) {
-            P2 -=angka
-        }
-        
-        for (let i in tangga){
+        for (let i in tangga){ // ketentuan 1 (naik)
             let naik = tangga[i]
             if (P2 === +i){
                 P2 = naik;
             }
         }
-        for (let i in ular){
+        for (let i in ular){ // ketentuan 2 (turun)
             let turun = ular[i]
             if (P2 === +i){
                 P2 = turun;
             }
+        }
+        if (P2 > 100) { // jika posisi + dadu > 100, posisi tetap
+            P2 -=angka
         }
         sum = P2
     }
@@ -68,66 +61,46 @@ function play(player, position, correction, angka) {
     document.getElementById(`${player}`).style.transition = `linear all .5s`
 
     if (sum < 10) {
-
         document.getElementById(`${player}`).style.left = `${(sum - 1) * 62}px`
         document.getElementById(`${player}`).style.top = `${-0 * 62 - correction}px`
-
-
-    }
-
-    else if (sum === 100) {
+    } else if (sum === 100) {
         winSound.play()
         if (player === 'P1') {
             alert("Red Won !!")
-        }
-        else if (player === 'P2') {
+        } else if (player === 'P2') {
             alert("Yellow Won !!")
         }
         location.reload()
-    }
-
-    else {
-
+    } else {
         numarr = Array.from(String(sum))
         n1 = eval(numarr.shift())
         n2 = eval(numarr.pop())
         // console.log(n1, n2)
 
         if (n1 % 2 != 0) {
-
             if (n2 == 0) {
                 document.getElementById(`${player}`).style.left = `${(9) * 62}px`
                 document.getElementById(`${player}`).style.top = `${(-n1 + 1) * 62 - correction}px`
-            }
-            else {
+            } else {
                 document.getElementById(`${player}`).style.left = `${(9 - (n2 - 1)) * 62}px`
                 document.getElementById(`${player}`).style.top = `${-n1 * 62 - correction}px`
-
             }
-
-        }
-        else if (n1 % 2 == 0) {
+        } else if (n1 % 2 == 0) {
             if (n2 == 0) {
-
                 document.getElementById(`${player}`).style.left = `${(0) * 62}px`
                 document.getElementById(`${player}`).style.top = `${(-n1 + 1) * 62 - correction}px`
-            }
-            else {
-
+            } else {
                 document.getElementById(`${player}`).style.left = `${(n2 - 1) * 62}px`
                 document.getElementById(`${player}`).style.top = `${-n1 * 62 - correction}px`
             }
-
         }
-
-
-
     }
 }
 
 // Fungsi Dadu
 let turn = 1 //Pemain Pertama
 function dadu(){
+    rollingSound.play();
     let angka = Math.floor(Math.random() * 6) + 1;
     document.getElementById("angka").innerText = angka;
 
