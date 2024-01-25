@@ -1,6 +1,7 @@
 // MEDIA
 let rollingSound = new Audio('asset/dadu.mp3')
 let winSound = new Audio('asset/win.mp3')
+let bgsound = new Audio('https://www.youtube.com/watch?v=2yJgwwDcgV8')
 
 // ADD PLAYER
 let players = [];
@@ -23,11 +24,42 @@ document.getElementById("addPlayerBtn").addEventListener("click", function () {
               });
         }
     } else {
-        alert("PENUH WOI")
+        Swal.fire({
+            title: `Player is Full`,
+            icon: "warning"
+          })
         let button = document.getElementById("addPlayerBtn")
         button.disabled = true
     }
+
+    switch(players.length){
+        case 1:
+            document.getElementById(`P1`).style.opacity = 1
+            document.getElementById(`P2`).style.opacity = 0
+            document.getElementById(`P3`).style.opacity = 0
+            document.getElementById(`P4`).style.opacity = 0
+        break;
+        case 2:
+            document.getElementById(`P1`).style.opacity = 1
+            document.getElementById(`P2`).style.opacity = 1
+            document.getElementById(`P3`).style.opacity = 0
+            document.getElementById(`P4`).style.opacity = 0
+        break;
+        case 3:
+            document.getElementById(`P1`).style.opacity = 1
+            document.getElementById(`P2`).style.opacity = 1
+            document.getElementById(`P3`).style.opacity = 1
+            document.getElementById(`P4`).style.opacity = 0
+        break;
+        case 4:
+            document.getElementById(`P1`).style.opacity = 1
+            document.getElementById(`P2`).style.opacity = 1
+            document.getElementById(`P3`).style.opacity = 1
+            document.getElementById(`P4`).style.opacity = 1
+        break;
+    }
 });
+
 
 // ROLE PLAY
 let positions = []
@@ -119,7 +151,7 @@ function dadu() {
         let angka = Math.floor(Math.random() * 6) + 1;
         document.getElementById("angka").innerText = angka; // Display angka dadu di HTML
 
-        document.getElementById('turn-player').innerText = `${players[turn].id} : ${players[turn].playerName}'s`; // "P1"
+        document.getElementById('turn-player').innerText = `${players[turn].id}\n${players[turn].playerName}'s`; // "P1"
         play(turn, turn * 45, angka);
         turn++;
 
@@ -137,3 +169,5 @@ function dadu() {
 function reset(){
     location.reload()
 }
+
+

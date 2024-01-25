@@ -8,15 +8,16 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
 </head>
+
 <body>
     <div class="container">
         <h1>Snakes & ladder</h1>
 
         <!-- MENU KIRI -->
         <div class="menu">
-            <p id="turn-player">Players</p>
-            <p id="angka">0</p>
+            <p id="turn-player">Players<br>-</p>
             <button id="dadu-btn" onclick="dadu()">Turn Dice</button>
+            <p id="angka">0</p>
             <br>
             <button class="addbtn" id="addPlayerBtn">Add Player</button>
         </div>
@@ -241,8 +242,13 @@
         <!-- IMAGE -->
         <img src="asset/snake ladder.png" alt="board">
     </div>
+    <audio controls autoplay style="display: none;">
+        <source src="asset/bgsound.mp3" type="audio/mpeg">
+        <source src="asset/bgsound.ogg" type="audio/ogg">
+    </audio>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script src="script.js"></script>
+
 </html>
