@@ -1,7 +1,7 @@
 // MEDIA
 let rollingSound = new Audio('asset/dadu.mp3')
 let winSound = new Audio('asset/win.mp3')
-let bgsound = new Audio('https://www.youtube.com/watch?v=2yJgwwDcgV8')
+let clickBtn = new Audio('asset/clickBtn.mp3')
 
 // ADD PLAYER
 let players = [];
@@ -13,6 +13,7 @@ function createPlayer(id, playerName) {
 }
 
 document.getElementById("addPlayerBtn").addEventListener("click", function () {
+    clickBtn.play()
     if (players.length < maxPlayers) {
         let id = "P" + (players.length + 1);
         let playerName = prompt('Silahkan input username!')
@@ -58,6 +59,7 @@ document.getElementById("addPlayerBtn").addEventListener("click", function () {
             document.getElementById(`P4`).style.opacity = 1
         break;
     }
+    clickBtn.play()
 });
 
 
@@ -140,6 +142,7 @@ function play(playerIndex, correction, angka) {
 // FUNGSI DADU
 let turn = 0;
 function dadu() {
+    clickBtn.play()
     if (players.length === 0) { // must input player
         Swal.fire({
             title: "Player Not  Found?",
