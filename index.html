@@ -4,17 +4,27 @@
 <head>
     <title>Ular Tangga</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="container">
-        <h1>Snakes and ladder</h1>
+        <h1>Snakes & ladder</h1>
 
         <!-- MENU KIRI -->
         <div class="menu">
             <p id="turn-player">Players</p>
             <p id="angka">0</p>
             <button id="dadu-btn" onclick="dadu()">Turn Dice</button>
-            <button id="addPlayerBtn">Add player</button>
+            <br>
+            <button class="addbtn" id="addPlayerBtn">Add Player</button>
+        </div>
+        <!-- board untuk winner -->
+        <div class="rmenu">
+            <p>Congrats</p>
+            <p id="won">Null</p>
+            <button id="reset" onclick="reset()">reset game</button>
         </div>
 
         <!-- BOARD 11 <= 100-->
@@ -232,5 +242,7 @@
         <img src="asset/snake ladder.png" alt="board">
     </div>
 </body>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <script src="script.js"></script>
 </html>

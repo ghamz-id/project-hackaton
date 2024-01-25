@@ -5,6 +5,7 @@ let winSound = new Audio('asset/win.mp3')
 // ADD PLAYER
 let players = [];
 let maxPlayers = 4
+
 function createPlayer(id, playerName) {
     players.push({ id: id, playerName: playerName});
     positions.push(0)
@@ -13,10 +14,13 @@ function createPlayer(id, playerName) {
 document.getElementById("addPlayerBtn").addEventListener("click", function () {
     if (players.length < maxPlayers) {
         let id = "P" + (players.length + 1);
-        let playerName = prompt("Enter Player Name:");
+        let playerName = prompt('Silahkan input username!')
         if (playerName) {
             createPlayer(id, playerName);
-            alert(`${playerName} added as a player!`);
+            Swal.fire({
+                title: `${playerName} added as a player!!`,
+                icon: "success"
+              });
         }
     } else {
         alert("PENUH WOI")
@@ -66,8 +70,13 @@ function play(playerIndex, correction, angka) {
     // KETENTUAN BOX
     if (box === 100) {
         winSound.play()
-        alert(`${players[playerIndex].playerName} Won!!`)
-        location.reload()
+        Swal.fire({
+            title: `${players[playerIndex].playerName} Won!!`,
+            icon: "info"
+          });
+        document.getElementById("won").innerText = players[playerIndex].playerName;
+        document.getElementById(`${players[playerIndex].id}`).style.left = `${(0) * 60.5}px`
+        document.getElementById(`${players[playerIndex].id}`).style.top = `${(-row + 1) * 62 - correction}px`
     } else if (box < 10) {
         document.getElementById(`${players[playerIndex].id}`).style.top = `${-0 * 62 - correction}px`
         document.getElementById(`${players[playerIndex].id}`).style.left = `${(box - 1) * 60.5}px`
@@ -100,7 +109,11 @@ function play(playerIndex, correction, angka) {
 let turn = 0;
 function dadu() {
     if (players.length === 0) { // must input player
-        alert('Silahkan tambahkan pemain!')
+        Swal.fire({
+            title: "Player Not  Found?",
+            text: "Please insert your username",
+            icon: "question"
+          });
     } else { // playing
         rollingSound.play();
         let angka = Math.floor(Math.random() * 6) + 1;
@@ -113,9 +126,14 @@ function dadu() {
         if (turn >= players.length) {
             turn = 0;
         }
+        console.log(turn);
     }
     if (players.length > 0) { // disable add player
         let button = document.getElementById("addPlayerBtn")
         button.disabled = true;
     }
+}
+
+function reset(){
+    location.reload()
 }

@@ -1,11 +1,28 @@
 * {
   margin: 0;
   padding: 0;
+  
+}
+
+body {
+  background-image: url(https://wallpapercave.com/wp/wp3906251.jpg);
+  font-family: 'Silkscreen', sans-serif;
+}
+
+.container{
+  height: 600px;
+  margin: auto;
+  width: 100%
 }
 
 h1 {
   text-align: center;
   padding: 35px;
+  color: rgb(72, 255, 255);
+  text-shadow: -4px -2px 0 #5d5252;
+  font-size: 50px;
+  
+
 }
 
 .board {
@@ -25,6 +42,8 @@ h1 {
 #P2,
 #P3,
 #P4 {
+  display: grid;
+  align-items: center;
   width: 40px;
   height: 40px;
   border-radius: 100px;
@@ -68,12 +87,32 @@ h1 {
   transition: all linear 1s;
   background-color: rgb(25, 38, 212);
 }
+
 .menu {
   display: grid;
   place-items: center;
   position: absolute;
+  background-color: white;
+  padding-top: 25px;
+  padding-bottom: 10px;
+  border: 25px solid white;
+  border-radius: 29px;
   top: 200px;
   left: 120px;
+  font-size: 2rem;
+  z-index: 99;
+}
+.rmenu {
+  display: grid;
+  place-items: center;
+  position: absolute;
+  background-color: white;
+  padding-top: 25px;
+  padding-bottom: 10px;
+  border: 25px solid white;
+  border-radius: 29px;
+  top: 200px;
+  right: 120px;
   font-size: 2rem;
   z-index: 99;
 }
@@ -91,8 +130,11 @@ img {
   display: grid;
   margin: auto;
   position: relative;
-  top: -630px;
+  top: -642px;
   left: 0px;
   width: 610px;
   height: 625px;
+  border-radius: 10px;
+  border: 12px solid #c4faf8;
+  box-shadow: 15px 25px 50px;
 }
