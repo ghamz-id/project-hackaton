@@ -22,7 +22,9 @@ h1 {
 }
 
 #P1,
-#P2 {
+#P2,
+#P3,
+#P4 {
   width: 40px;
   height: 40px;
   border-radius: 100px;
@@ -33,8 +35,8 @@ h1 {
 
 #P1 {
   position: relative;
-  z-index: 3;
-  top: 10px;
+  z-index: 5;
+  top: 0px;
   left: -65px;
   transition: all linear 1s;
   background-color: rgb(236, 82, 82);
@@ -42,13 +44,30 @@ h1 {
 
 #P2 {
   position: relative;
-  z-index: 2;
-  top: -35px;
+  z-index: 4;
+  top: -45px;
   left: -65px;
   transition: all linear 1s;
   background-color: rgb(243, 181, 46);
 }
 
+#P3 {
+  position: relative;
+  z-index: 3;
+  top: -90px;
+  left: -65px;
+  transition: all linear 1s;
+  background-color: rgb(70, 197, 19);
+}
+
+#P4 {
+  position: relative;
+  z-index: 2;
+  top: -135px;
+  left: -65px;
+  transition: all linear 1s;
+  background-color: rgb(25, 38, 212);
+}
 .menu {
   display: grid;
   place-items: center;
@@ -72,8 +91,8 @@ img {
   display: grid;
   margin: auto;
   position: relative;
-  top: -620px;
-  left: 15px;
-  width: 625px;
+  top: -630px;
+  left: 0px;
+  width: 610px;
   height: 625px;
 }

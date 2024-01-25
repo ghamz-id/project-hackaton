@@ -1,75 +1,76 @@
-let rollingSound = new Audio('asset/rpg-dice-rolling-95182.mp3')
-let winSound = new Audio('asset/winharpsichord-39642.mp3')
+// MEDIA
+let rollingSound = new Audio('asset/dadu.mp3')
+let winSound = new Audio('asset/win.mp3')
 
+// ADD PLAYER
+let players = [];
+let maxPlayers = 4
+function createPlayer(id, playerName) {
+    players.push({ id: id, playerName: playerName});
+    positions.push(0)
+}
+
+document.getElementById("addPlayerBtn").addEventListener("click", function () {
+    if (players.length < maxPlayers) {
+        let id = "P" + (players.length + 1);
+        let playerName = prompt("Enter Player Name:");
+        if (playerName) {
+            createPlayer(id, playerName);
+            alert(`${playerName} added as a player!`);
+        }
+    } else {
+        alert("PENUH WOI")
+        let button = document.getElementById("addPlayerBtn")
+        button.disabled = true
+    }
+});
+
+// ROLE PLAY
+let positions = []
 let ketentuan = [
     tangga = {
-        1:38, 4:14, 8:30, 21:42, 28:76, 50:67, 71:92, 80:99
+        1: 38, 4: 14, 8: 30, 21: 42, 28: 76, 50: 67, 71: 92, 80: 99
     },
     ular = {
-        32:10, 36:6, 48:26, 62:18, 88:24, 95:56, 97:78
+        32: 10, 36: 6, 48: 26, 62: 18, 88: 24, 95: 56, 97: 78
     }
 ]
 
-let p1_position = 0;
-let p2_position = 0;
-
-function play(player, correction, angka) {
+// FUNGSI PLAYER
+function play(playerIndex, correction, angka) {
     let tangga = ketentuan[0];
     let ular = ketentuan[1];
     let box = 0;
-    
-    if (player === 'P1') { //posisi player 1
-        p1_position += angka;
-        for (let i in tangga){ // ketentuan 1 (naik)
-            let naik = tangga[i];
-            if (p1_position === +i){
-                p1_position = naik;
-            }
+
+    positions[playerIndex] += angka;
+
+    for (let i in tangga) {
+        let naik = tangga[i];
+        if (positions[playerIndex] === +i) {
+            positions[playerIndex] = naik;
         }
-        for (let i in ular){ // ketentuan 2 (turun)
-            let turun = ular[i];
-            if (p1_position === +i){
-                p1_position = turun;
-            }
-        }
-        if (p1_position > 100) { // jika posisi + dadu > 100, posisi tetap
-            p1_position -=angka;
-        }
-        box = p1_position;
     }
 
-    if (player === 'P2') { //posisi player 2
-        p2_position += angka;
-        for (let i in tangga){ // ketentuan 1 (naik)
-            let naik = tangga[i];
-            if (p2_position === +i){
-                p2_position = naik;
-            }
+    for (let i in ular) {
+        let turun = ular[i];
+        if (positions[playerIndex] === +i) {
+            positions[playerIndex] = turun;
         }
-        for (let i in ular){ // ketentuan 2 (turun)
-            let turun = ular[i];
-            if (p2_position === +i){
-                p2_position = turun;
-            }
-        }
-        if (p2_position > 100) { // jika posisi + dadu > 100, posisi tetap
-            p2_position -=angka;
-        }
-        box = p2_position;
     }
 
-    // Posisi Player
+    if (positions[playerIndex] > 100) {
+        positions[playerIndex] -= angka;
+    }
+    box = positions[playerIndex];
+
+    // KETENTUAN BOX
     if (box === 100) {
         winSound.play()
-        if (player === 'P1') {
-            alert("Red Won !!")
-        } else if (player === 'P2') {
-            alert("Yellow Won !!")
-        }
+        alert(`${players[playerIndex].playerName} Won!!`)
         location.reload()
     } else if (box < 10) {
-        document.getElementById(`${player}`).style.left = `${(box - 1) * 63}px`
-        document.getElementById(`${player}`).style.top = `${-0 * 63 - correction}px`
+        document.getElementById(`${players[playerIndex].id}`).style.top = `${-0 * 62 - correction}px`
+        document.getElementById(`${players[playerIndex].id}`).style.left = `${(box - 1) * 60.5}px`
     } else {
         let numarr = Array.from(String(box)); // angka convert ke string dan diubah ke array per-string => 10 = ['1','0']
         let row = numarr.shift(); //['0'] => baris
@@ -77,37 +78,44 @@ function play(player, correction, angka) {
 
         if (+row % 2 === 1) {
             if (+col === 0) {
-                document.getElementById(`${player}`).style.left = `${(9) * 63}px`
-                document.getElementById(`${player}`).style.top = `${(-row + 1) * 63 - correction}px`
+                document.getElementById(`${players[playerIndex].id}`).style.left = `${(9) * 60.5}px`
+                document.getElementById(`${players[playerIndex].id}`).style.top = `${(-row + 1) * 62 - correction}px`
             } else {
-                document.getElementById(`${player}`).style.left = `${(9 - (col - 1)) * 63}px`
-                document.getElementById(`${player}`).style.top = `${-row * 63 - correction}px`
+                document.getElementById(`${players[playerIndex].id}`).style.left = `${(9 - (col - 1)) * 60.5}px`
+                document.getElementById(`${players[playerIndex].id}`).style.top = `${-row * 62 - correction}px`
             }
         } else if (+row % 2 === 0) {
             if (+col === 0) {
-                document.getElementById(`${player}`).style.left = `${(0) * 63}px`
-                document.getElementById(`${player}`).style.top = `${(-row + 1) * 63 - correction}px`
+                document.getElementById(`${players[playerIndex].id}`).style.left = `${(0) * 60.5}px`
+                document.getElementById(`${players[playerIndex].id}`).style.top = `${(-row + 1) * 62 - correction}px`
             } else {
-                document.getElementById(`${player}`).style.left = `${(col - 1) * 63}px`;
-                document.getElementById(`${player}`).style.top = `${-row * 63 - correction}px`
+                document.getElementById(`${players[playerIndex].id}`).style.left = `${(col - 1) * 60.5}px`;
+                document.getElementById(`${players[playerIndex].id}`).style.top = `${-row * 62 - correction}px`
             }
         }
     }
 }
 
-// Fungsi Dadu
-let turn = 1 // turn pertama
-function dadu(){
-    rollingSound.play();
-    let angka = Math.floor(Math.random() * 6) + 1;
-    document.getElementById("angka").innerText = angka;
+// FUNGSI DADU
+let turn = 0;
+function dadu() {
+    if (players.length === 0) { // must input player
+        alert('Silahkan tambahkan pemain!')
+    } else { // playing
+        rollingSound.play();
+        let angka = Math.floor(Math.random() * 6) + 1;
+        document.getElementById("angka").innerText = angka; // Display angka dadu di HTML
 
-    if (turn % 2 === 1) {
-        document.getElementById('turn-player').innerText = `P2 : Yellow's`
-        play('P1', -10, angka)
-    }else if (turn % 2 === 0) {
-        document.getElementById('turn-player').innerText = `P1 : Red's`
-        play('P2', 35, angka)
+        document.getElementById('turn-player').innerText = `${players[turn].id} : ${players[turn].playerName}'s`; // "P1"
+        play(turn, turn * 45, angka);
+        turn++;
+
+        if (turn >= players.length) {
+            turn = 0;
+        }
     }
-    turn++
+    if (players.length > 0) { // disable add player
+        let button = document.getElementById("addPlayerBtn")
+        button.disabled = true;
+    }
 }
