@@ -64,7 +64,7 @@ h1 {
 #P2 {
   position: relative;
   z-index: 4;
-  top: -45px;
+  top: -90px;
   left: -65px;
   transition: all linear 1s;
   background-color: rgb(243, 181, 46);
@@ -73,7 +73,7 @@ h1 {
 #P3 {
   position: relative;
   z-index: 3;
-  top: -90px;
+  top: -180px;
   left: -65px;
   transition: all linear 1s;
   background-color: rgb(70, 197, 19);
@@ -82,7 +82,7 @@ h1 {
 #P4 {
   position: relative;
   z-index: 2;
-  top: -135px;
+  top: -270px;
   left: -65px;
   transition: all linear 1s;
   background-color: rgb(25, 38, 212);

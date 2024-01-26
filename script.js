@@ -5,6 +5,7 @@ let clickBtn = new Audio('asset/clickBtn.mp3')
 
 // ADD PLAYER
 let players = [];
+
 let maxPlayers = 4
 
 function createPlayer(id, playerName) {
@@ -154,7 +155,7 @@ function dadu() {
         let angka = Math.floor(Math.random() * 6) + 1;
         document.getElementById("angka").innerText = angka; // Display angka dadu di HTML
 
-        document.getElementById('turn-player').innerText = `${players[turn].id}\n${players[turn].playerName}'s`; // "P1"
+        document.getElementById('turn-player').innerText = `${players[turn].id}\n${players[turn].playerName}`; // "P1"
         play(turn, turn * 45, angka);
         turn++;
 
@@ -173,4 +174,9 @@ function reset(){
     location.reload()
 }
 
-
+if (players.length === 0){
+    document.getElementById(`P1`).style.opacity = 0
+    document.getElementById(`P2`).style.opacity = 0
+    document.getElementById(`P3`).style.opacity = 0
+    document.getElementById(`P4`).style.opacity = 0
+}
